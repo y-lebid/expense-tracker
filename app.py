@@ -12,24 +12,24 @@ tk.Tk.report_callback_exception = _silent_bgerror
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
-app = MainWindow(settings={"name": "User"})
-app.mainloop()
-
-
 def main():
     settings = load_settings()
+    
+    app = None
 
     def start_main():
+        nonlocal app    
         new_settings = load_settings()
-
         ctk.set_appearance_mode(new_settings["theme"])
         app = MainWindow(new_settings)
         app.mainloop()
 
+
     if not settings or settings.get("first_run", True):
         welcome = WelcomeWindow(on_finish=start_main)
-        welcome.mainloop()
+        welcome.mainloop() 
     else:
+
         ctk.set_appearance_mode(settings["theme"])
         app = MainWindow(settings)
         app.mainloop()
